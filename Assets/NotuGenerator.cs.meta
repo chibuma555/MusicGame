@@ -1,11 +1,9 @@
 fileFormatVersion: 2
-guid: d02ca95eac6174b50844629c7d3a39ea
+guid: 30f93c98979c3457db004ad0ce699a3d
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - notuPrefab: {fileID: 4598483995525897373, guid: 6a30412b3a7df418cacec4ad974a2776,
-      type: 3}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
