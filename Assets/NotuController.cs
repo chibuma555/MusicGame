@@ -23,5 +23,10 @@ public class NotuController : MonoBehaviour
         rb.velocity =  new Vector3(velocityX,velocityY, velocityZ);
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("当たったよ");
+    }
+
 }
 
