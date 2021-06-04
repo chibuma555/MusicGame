@@ -15,10 +15,13 @@ public class NotuGenerator : MonoBehaviour
     float xpos_3 = 1.2f;
     float xpos_4 = 3.6f;
 
+
     // Start is called before the first frame update
     void Start()
     {
-        for(int i =0; i <= 30; i++)
+        
+
+        for (int i =0; i <= 30; i++)
         {
             GameObject notu = Instantiate(NotuPrefab);
             ListValue.Add(notu);

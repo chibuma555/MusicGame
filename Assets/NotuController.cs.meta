@@ -4,9 +4,8 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - StartLine: {fileID: 347689175764105519, guid: 9e46dc7814d7f41769d1f26527ad7049,
-      type: 3}
-  - EndLine: {fileID: 3135550036070442224, guid: 2ea2cfbb1379c4c9c811c4d49634c309,
+  - notus: {fileID: 4598483995525897373, guid: 6a30412b3a7df418cacec4ad974a2776, type: 3}
+  - rigidbody: {fileID: 8353449750867730883, guid: 6a30412b3a7df418cacec4ad974a2776,
       type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
