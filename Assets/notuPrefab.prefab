@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 1372753820313350555}
   - component: {fileID: 368077882500753280}
   - component: {fileID: 3987438081491913751}
-  - component: {fileID: 4655647190260224755}
   - component: {fileID: 8353449750867730883}
+  - component: {fileID: 1425517714012335041}
   m_Layer: 0
   m_Name: notuPrefab
-  m_TagString: Untagged
+  m_TagString: NotuTag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -95,18 +95,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4655647190260224755
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4598483995525897373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57dca666026554bf5a432910251f30fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &8353449750867730883
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -123,3 +111,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 3
+--- !u!114 &1425517714012335041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4598483995525897373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57dca666026554bf5a432910251f30fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  judgeArea: {fileID: 8679220078896677278, guid: 143ad77a0047e4c9e8e76192815caa3d,
+    type: 3}
+  scoreText: {fileID: 0}
+  Speed: -11
+  BadPosition: -1.3
+  GoodPosition: -0.5
+  GreatPosition: -0.3
+  ParfectPosition: -0.2

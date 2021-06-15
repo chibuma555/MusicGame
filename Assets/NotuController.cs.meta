@@ -4,9 +4,9 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - notus: {fileID: 4598483995525897373, guid: 6a30412b3a7df418cacec4ad974a2776, type: 3}
-  - rigidbody: {fileID: 8353449750867730883, guid: 6a30412b3a7df418cacec4ad974a2776,
-      type: 3}
+  - badarea: {instanceID: 0}
+  - notu: {instanceID: 0}
+  - judgeText: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
