@@ -46,7 +46,7 @@ public class ScoreManager : MonoBehaviour
     }
 
     // コンボ処理
-    public void AddCombo(int count)
+    public void AddCombo(int count = 0, bool cr = true)
     {
         comboText.enabled = true;
         combo += count;

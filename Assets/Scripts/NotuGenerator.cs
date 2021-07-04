@@ -10,10 +10,10 @@ public class NotuGenerator : MonoBehaviour
     //リストを定義
     List<GameObject> ListValue = new List<GameObject>();
 
-    float xpos_1 = -3.7f;
-    float xpos_2 = -1.23f;
-    float xpos_3 = 1.23f;
-    float xpos_4 = 3.7f;
+    float xpos_1 = -3.9f;
+    float xpos_2 = -1.25f;
+    float xpos_3 = 1.31f;
+    float xpos_4 = 3.9f;
 
     float ypos = 0.3f;
 

@@ -20,10 +20,10 @@ public class NotuController : MonoBehaviour
     private float velocityZ = -13f;
 
     // ノーツのx軸を指定
-    float xpos_1 = -3.7f;
-    float xpos_2 = -1.23f;
-    float xpos_3 = 1.23f;
-    float xpos_4 = 3.7f;
+    float xpos_1 = -3.9f;
+    float xpos_2 = -1.25f;
+    float xpos_3 = 1.31f;
+    float xpos_4 = 3.9f;
 
     // 判定ラインの数値(ノーツと判定ブロックの距離)
     [SerializeField] float BadPosition;
@@ -37,7 +37,8 @@ public class NotuController : MonoBehaviour
     // BGM関連
     AudioSource sound;
     public AudioClip Clip;
-    bool a = false;
+
+    bool clash = false;
 
 
     // Start is called before the first frame update
@@ -52,6 +53,10 @@ public class NotuController : MonoBehaviour
         judgeText_4 = GameObject.Find("Judgetext(4)").GetComponent<Text>();
         sm = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
         sound = GetComponent<AudioSource>();
+
+        
+        
+
 
         // 自分の子要素をチェック(ブロックの破片を子要素に)
         foreach (Transform child in gameObject.transform)
@@ -74,10 +79,10 @@ public class NotuController : MonoBehaviour
     }
 
     void Update()
-    {
+    { 
         // ノーツと判定エリアの距離
         float offsetZ = judgeArea.transform.position.z - this.transform.position.z;
-
+        
         // 各キーの処理
         if (this.gameObject.transform.position.x == xpos_1)
         {
@@ -85,33 +90,37 @@ public class NotuController : MonoBehaviour
             {
                 if (offsetZ > ParfectPosition)
                 {
+                    
                     judgeText_1.text = "Parfect";
                     sm.AddScore(500, true);
-                    sm.AddCombo(1);
+                    sm.AddCombo(count:1);
                     sound.PlayOneShot(Clip);
                     Explode();
 
                 }
                 else if (offsetZ > GreatPosition)
                 {
+                    
                     judgeText_1.text = "Great";
                     sm.AddScore(300, true);
-                    sm.AddCombo(1);
+                    sm.AddCombo(count: 1);
                     sound.PlayOneShot(Clip);
                     Explode();
 
                 }
                 else if (offsetZ > GoodPosition)
                 {
+                    
                     judgeText_1.text = "Good";
                     sm.AddScore(100, true);
-                    sm.AddCombo(1);
+                    sm.AddCombo(count: 1);
                     sound.PlayOneShot(Clip);
                     Explode();
 
                 }
                 else if (offsetZ > BadPosition)
                 {
+                    
                     judgeText_1.text = "Bad";
                     sm.ComboReset();
                     sound.PlayOneShot(Clip);
@@ -129,7 +138,7 @@ public class NotuController : MonoBehaviour
                 {
                     judgeText_2.text = "Parfect";
                     sm.AddScore(500, true);
-                    sm.AddCombo(1);
+                    sm.AddCombo(count: 1);
                     sound.PlayOneShot(Clip);
                     Explode();
                 }
@@ -137,7 +146,7 @@ public class NotuController : MonoBehaviour
                 {
                     judgeText_2.text = "Great";
                     sm.AddScore(300, true);
-                    sm.AddCombo(1);
+                    sm.AddCombo(count: 1);
                     sound.PlayOneShot(Clip);
                     Explode();
                 }
@@ -145,7 +154,7 @@ public class NotuController : MonoBehaviour
                 {
                     judgeText_2.text = "Good";
                     sm.AddScore(100, true);
-                    sm.AddCombo(1);
+                    sm.AddCombo(count: 1);
                     sound.PlayOneShot(Clip);
                     Explode();
                 }
@@ -167,7 +176,7 @@ public class NotuController : MonoBehaviour
                 {
                     judgeText_3.text = "Parfect";
                     sm.AddScore(500, true);
-                    sm.AddCombo(1);
+                    sm.AddCombo(count: 1);
                     sound.PlayOneShot(Clip);
                     Explode();
                 }
@@ -175,7 +184,7 @@ public class NotuController : MonoBehaviour
                 {
                     judgeText_3.text = "Great";
                     sm.AddScore(300, true);
-                    sm.AddCombo(1);
+                    sm.AddCombo(count: 1);
                     sound.PlayOneShot(Clip);
                     Explode();
                 }
@@ -183,7 +192,7 @@ public class NotuController : MonoBehaviour
                 {
                     judgeText_3.text = "Good";
                     sm.AddScore(100, true);
-                    sm.AddCombo(11);
+                    sm.AddCombo(count: 1);
                     sound.PlayOneShot(Clip);
                     Explode();
                 }
@@ -205,7 +214,7 @@ public class NotuController : MonoBehaviour
                 {
                     judgeText_4.text = "Parfect";
                     sm.AddScore(500, true);
-                    sm.AddCombo(1);
+                    sm.AddCombo(count: 1);
                     sound.PlayOneShot(Clip);
                     Explode();
                 }
@@ -213,7 +222,7 @@ public class NotuController : MonoBehaviour
                 {
                     judgeText_4.text = "Great";
                     sm.AddScore(300, true);
-                    sm.AddCombo(1);
+                    sm.AddCombo(count: 1);
                     sound.PlayOneShot(Clip);
                     Explode();
                 }
@@ -221,7 +230,7 @@ public class NotuController : MonoBehaviour
                 {
                     judgeText_4.text = "Good";
                     sm.AddScore(100, true);
-                    sm.AddCombo(1);
+                    sm.AddCombo(count: 1);
                     sound.PlayOneShot(Clip);
                     Explode();
                 }
@@ -236,12 +245,12 @@ public class NotuController : MonoBehaviour
         }
     }
 
+   
 
 
     // ノーツエフェクト
     void Explode()
-    {
-        a = true;
+    {  
         foreach (GameObject obj in myParts)
         {
             var random = new System.Random();
@@ -255,6 +264,7 @@ public class NotuController : MonoBehaviour
             obj.GetComponent<Rigidbody>().AddTorque(forcePower, ForceMode.Impulse);
             Invoke("Destroynotu", 0.5f);
         }
+        clash = true;
     }
     
     void Destroynotu()
@@ -295,6 +305,8 @@ public class NotuController : MonoBehaviour
             Destroy(this.gameObject);
          }
     }
+
+    
 }
     
      

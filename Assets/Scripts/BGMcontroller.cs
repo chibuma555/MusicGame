@@ -21,7 +21,7 @@ public class BGMcontroller : MonoBehaviour
     void Update()
     {
         count += Time.deltaTime;
-        Debug.Log("経過時間(秒)" + Time.time);
+        //Debug.Log("経過時間(秒)" + Time.time);
 
         float audiotime = audiosource.time;
         if (count >= 3 && t == true)
