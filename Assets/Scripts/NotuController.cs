@@ -5,40 +5,47 @@ using UnityEngine.UI;
 
 public class NotuController : MonoBehaviour
 {
-    // 各種オブジェクトを定義
-    public GameObject judgeArea;
-    private Text judgeText_1;
-    private Text judgeText_2;
-    private Text judgeText_3;
-    private Text judgeText_4;
-    private ScoreManager sm;    
 
-    // ノーツに速度関連
+    // 速度関連(ノーツ)
     Rigidbody rb;
     private float velocityX = 0f;
     private float velocityY = 0f;
     private float velocityZ = -13f;
 
-    // ノーツのx軸を指定
+    // x座標関連(ノーツ)
     float xpos_1 = -3.9f;
     float xpos_2 = -1.25f;
     float xpos_3 = 1.31f;
     float xpos_4 = 3.9f;
 
-    // 判定ラインの数値(ノーツと判定ブロックの距離)
+    // 判定ライン関連(ノーツ,判定オブジェクト)
     [SerializeField] float BadPosition;
     [SerializeField] float GoodPosition;
     [SerializeField] float GreatPosition;
     [SerializeField] float ParfectPosition;
+    public GameObject judgeArea;
 
-    // 子要素を管理するリスト
-    List<GameObject> myParts = new List<GameObject>();
+    // テキスト関連(スコア含む)
+    public Text judgeText_1;
+    private Text judgeText_2;
+    private Text judgeText_3;
+    private Text judgeText_4;
+    private ScoreManager sm;
 
     // BGM関連
     AudioSource sound;
     public AudioClip Clip;
 
-    bool clash = false;
+    // アニメーション,エフェクト関連
+    [SerializeField] GameObject m_crashEffectPrefab = default;
+    [SerializeField] Animator textAnime_1;
+    [SerializeField] Animator textAnime_2;
+    [SerializeField] Animator textAnime_3;
+    [SerializeField] Animator textAnime_4;
+
+
+
+
 
 
     // Start is called before the first frame update
@@ -47,27 +54,20 @@ public class NotuController : MonoBehaviour
         // 各種オブジェクトの取得
         rb = GetComponent<Rigidbody>();
         judgeArea = GameObject.Find("JudgeArea");
+
         judgeText_1 = GameObject.Find("Judgetext(1)").GetComponent<Text>();
         judgeText_2 = GameObject.Find("Judgetext(2)").GetComponent<Text>();
         judgeText_3 = GameObject.Find("Judgetext(3)").GetComponent<Text>();
         judgeText_4 = GameObject.Find("Judgetext(4)").GetComponent<Text>();
+
         sm = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
+
         sound = GetComponent<AudioSource>();
-
-        
-        
-
-
-        // 自分の子要素をチェック(ブロックの破片を子要素に)
-        foreach (Transform child in gameObject.transform)
-        {
-            // ノーツにRigidbodyを追加してKinematicにしておく
-            child.gameObject.AddComponent<Rigidbody>();
-            child.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-
-            // 子要素リストにパーツの追加
-            myParts.Add(child.gameObject);
-        }
+        // アニメーション
+        textAnime_1 = GameObject.Find("Judgetext(1)").GetComponent<Animator>();
+        textAnime_2 = GameObject.Find("Judgetext(2)").GetComponent<Animator>();
+        textAnime_3 = GameObject.Find("Judgetext(3)").GetComponent<Animator>();
+        textAnime_4 = GameObject.Find("Judgetext(4)").GetComponent<Animator>();
 
     }
 
@@ -79,30 +79,32 @@ public class NotuController : MonoBehaviour
     }
 
     void Update()
-    { 
+    {
         // ノーツと判定エリアの距離
         float offsetZ = judgeArea.transform.position.z - this.transform.position.z;
         
         // 各キーの処理
         if (this.gameObject.transform.position.x == xpos_1)
         {
-            if (Input.GetKeyDown(KeyCode.D))
+            if (Input.GetKey(KeyCode.D))
             {
                 if (offsetZ > ParfectPosition)
                 {
-                    
                     judgeText_1.text = "Parfect";
-                    sm.AddScore(500, true);
+                    judgeText_1.color = new Color(1.0f,0.1f,0,1.0f);
+                    textAnime_1.SetBool("is_drow", true);
+                    sm.AddScore(700, true);
                     sm.AddCombo(count:1);
                     sound.PlayOneShot(Clip);
                     Explode();
-
                 }
                 else if (offsetZ > GreatPosition)
                 {
                     
                     judgeText_1.text = "Great";
-                    sm.AddScore(300, true);
+                    judgeText_1.color = new Color(1.0f, 0.5f, 0, 1.0f);
+                    textAnime_1.SetBool("is_drow", true);
+                    sm.AddScore(500, true);
                     sm.AddCombo(count: 1);
                     sound.PlayOneShot(Clip);
                     Explode();
@@ -112,6 +114,8 @@ public class NotuController : MonoBehaviour
                 {
                     
                     judgeText_1.text = "Good";
+                    judgeText_1.color = new Color(1.0f, 0.9f, 0, 1.0f);
+                    textAnime_1.SetBool("is_drow", true);
                     sm.AddScore(100, true);
                     sm.AddCombo(count: 1);
                     sound.PlayOneShot(Clip);
@@ -122,11 +126,17 @@ public class NotuController : MonoBehaviour
                 {
                     
                     judgeText_1.text = "Bad";
+                    judgeText_1.color = new Color(0, 0.8f, 1.0f, 1.0f);
+                    textAnime_1.SetBool("is_drow", true);
                     sm.ComboReset();
                     sound.PlayOneShot(Clip);
                     Explode();
 
                 }
+            }
+            else if (Input.GetKeyUp(KeyCode.D))
+            {
+                textAnime_1.SetBool("is_drow", false);
             }
         }
 
@@ -137,7 +147,9 @@ public class NotuController : MonoBehaviour
                 if (offsetZ > ParfectPosition)
                 {
                     judgeText_2.text = "Parfect";
-                    sm.AddScore(500, true);
+                    judgeText_2.color = new Color(1.0f, 0.1f, 0, 1.0f);
+                    textAnime_2.SetBool("is_drow", true);
+                    sm.AddScore(700, true);
                     sm.AddCombo(count: 1);
                     sound.PlayOneShot(Clip);
                     Explode();
@@ -145,7 +157,9 @@ public class NotuController : MonoBehaviour
                 else if (offsetZ > GreatPosition)
                 {
                     judgeText_2.text = "Great";
-                    sm.AddScore(300, true);
+                    judgeText_2.color = new Color(1.0f, 0.5f, 0, 1.0f);
+                    textAnime_2.SetBool("is_drow", true);
+                    sm.AddScore(500, true);
                     sm.AddCombo(count: 1);
                     sound.PlayOneShot(Clip);
                     Explode();
@@ -153,6 +167,8 @@ public class NotuController : MonoBehaviour
                 else if (offsetZ > GoodPosition)
                 {
                     judgeText_2.text = "Good";
+                    judgeText_2.color = new Color(1.0f, 0.9f, 0, 1.0f);
+                    textAnime_2.SetBool("is_drow", true);
                     sm.AddScore(100, true);
                     sm.AddCombo(count: 1);
                     sound.PlayOneShot(Clip);
@@ -161,10 +177,16 @@ public class NotuController : MonoBehaviour
                 else if (offsetZ > BadPosition)
                 {
                     judgeText_2.text = "Bad";
+                    judgeText_2.color = new Color(0, 0.8f, 1.0f, 1.0f);
+                    textAnime_2.SetBool("is_drow", true);
                     sm.ComboReset();
                     sound.PlayOneShot(Clip);
                     Explode();
                 }
+            }
+            else if (Input.GetKeyUp(KeyCode.F))
+            {
+                textAnime_2.SetBool("is_drow", false);
             }
         }
 
@@ -175,7 +197,9 @@ public class NotuController : MonoBehaviour
                 if (offsetZ > ParfectPosition)
                 {
                     judgeText_3.text = "Parfect";
-                    sm.AddScore(500, true);
+                    judgeText_3.color = new Color(1.0f, 0.1f, 0, 1.0f);
+                    textAnime_3.SetBool("is_drow", true);
+                    sm.AddScore(700, true);
                     sm.AddCombo(count: 1);
                     sound.PlayOneShot(Clip);
                     Explode();
@@ -183,7 +207,9 @@ public class NotuController : MonoBehaviour
                 else if (offsetZ > GreatPosition)
                 {
                     judgeText_3.text = "Great";
-                    sm.AddScore(300, true);
+                    judgeText_3.color = new Color(1.0f, 0.5f, 0, 1.0f);
+                    textAnime_3.SetBool("is_drow", true);
+                    sm.AddScore(500, true);
                     sm.AddCombo(count: 1);
                     sound.PlayOneShot(Clip);
                     Explode();
@@ -191,6 +217,8 @@ public class NotuController : MonoBehaviour
                 else if (offsetZ > GoodPosition)
                 {
                     judgeText_3.text = "Good";
+                    judgeText_3.color = new Color(1.0f, 0.9f, 0, 1.0f);
+                    textAnime_3.SetBool("is_drow", true);
                     sm.AddScore(100, true);
                     sm.AddCombo(count: 1);
                     sound.PlayOneShot(Clip);
@@ -199,10 +227,16 @@ public class NotuController : MonoBehaviour
                 else if (offsetZ > BadPosition)
                 {
                     judgeText_3.text = "Bad";
+                    judgeText_3.color = new Color(0, 0.8f, 1.0f, 1.0f);
+                    textAnime_3.SetBool("is_drow", true);
                     sm.ComboReset();
                     sound.PlayOneShot(Clip);
                     Explode();
                 }
+            }
+            else if (Input.GetKeyUp(KeyCode.J))
+            {
+                textAnime_3.SetBool("is_drow", false);
             }
         }
 
@@ -213,7 +247,9 @@ public class NotuController : MonoBehaviour
                 if (offsetZ > ParfectPosition)
                 {
                     judgeText_4.text = "Parfect";
-                    sm.AddScore(500, true);
+                    judgeText_4.color = new Color(1.0f, 0.1f, 0, 1.0f);
+                    textAnime_4.SetBool("is_drow", true);
+                    sm.AddScore(700, true);
                     sm.AddCombo(count: 1);
                     sound.PlayOneShot(Clip);
                     Explode();
@@ -221,7 +257,9 @@ public class NotuController : MonoBehaviour
                 else if (offsetZ > GreatPosition)
                 {
                     judgeText_4.text = "Great";
-                    sm.AddScore(300, true);
+                    judgeText_4.color = new Color(1.0f, 0.5f, 0, 1.0f);
+                    textAnime_4.SetBool("is_drow", true);
+                    sm.AddScore(500, true);
                     sm.AddCombo(count: 1);
                     sound.PlayOneShot(Clip);
                     Explode();
@@ -229,6 +267,8 @@ public class NotuController : MonoBehaviour
                 else if (offsetZ > GoodPosition)
                 {
                     judgeText_4.text = "Good";
+                    judgeText_1.color = new Color(1.0f, 0.9f, 0, 1.0f);
+                    textAnime_4.SetBool("is_drow", true);
                     sm.AddScore(100, true);
                     sm.AddCombo(count: 1);
                     sound.PlayOneShot(Clip);
@@ -237,41 +277,27 @@ public class NotuController : MonoBehaviour
                 else if (offsetZ > BadPosition)
                 {
                     judgeText_4.text = "Bad";
+                    judgeText_4.color = new Color(0, 0.8f, 1.0f, 1.0f);
+                    textAnime_4.SetBool("is_drow", true);
                     sm.ComboReset();
                     sound.PlayOneShot(Clip);
                     Explode();
                 }
             }
+            else if (Input.GetKeyUp(KeyCode.K))
+            {
+                textAnime_4.SetBool("is_drow", false);
+            }
         }
     }
-
-   
-
 
     // ノーツエフェクト
     void Explode()
-    {  
-        foreach (GameObject obj in myParts)
-        {
-            var random = new System.Random();
-            var min = -3;
-            var max = 3;
-
-            //　飛ぶパワーと回転をランダムに設定
-            Vector3 forcePower = new Vector3(random.Next(min, max), random.Next(0, max), random.Next(min, max));
-            obj.GetComponent<Rigidbody>().isKinematic = false;
-            obj.GetComponent<Rigidbody>().AddForce(forcePower, ForceMode.Impulse);
-            obj.GetComponent<Rigidbody>().AddTorque(forcePower, ForceMode.Impulse);
-            Invoke("Destroynotu", 0.5f);
-        }
-        clash = true;
-    }
-    
-    void Destroynotu()
     {
-        Destroy(this.gameObject);
+       Instantiate(m_crashEffectPrefab, this.transform.position, Quaternion.identity);
+       Destroy(this.gameObject);
     }
-        
+
 
     //衝突判定(miss時のみ)
     void OnTriggerEnter(Collider other)
@@ -281,32 +307,47 @@ public class NotuController : MonoBehaviour
             if (this.transform.position.x == xpos_1)
             {
                 judgeText_1.text = "Miss";
+                judgeText_1.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                textAnime_1.SetBool("is_drow", true);
                 sm.ComboReset();
             }
 
             if (this.transform.position.x == xpos_2)
             {
                 judgeText_2.text = "Miss";
+                judgeText_2.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                textAnime_2.SetBool("is_drow", true);
                 sm.ComboReset();
             }
 
             if (this.transform.position.x == xpos_3)
             {
                 judgeText_3.text = "Miss";
+                judgeText_3.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                textAnime_3.SetBool("is_drow", true);
                 sm.ComboReset();
             }
 
             if (this.transform.position.x == xpos_4)
             {
                 judgeText_4.text = "Miss";
+                judgeText_4.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                textAnime_4.SetBool("is_drow", true);
                 sm.ComboReset();
             }
 
-            Destroy(this.gameObject);
-         }
+            Invoke("Destroyer", 0.1f);
+         } 
     }
 
-    
+    void Destroyer()
+    {
+        Destroy(this.gameObject);
+        textAnime_1.SetBool("is_drow", false);
+        textAnime_2.SetBool("is_drow", false);
+        textAnime_3.SetBool("is_drow", false);
+        textAnime_4.SetBool("is_drow", false);
+    }
 }
     
      

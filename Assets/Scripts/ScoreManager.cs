@@ -7,28 +7,18 @@ public class ScoreManager : MonoBehaviour
 {
     //スコア関連
     [SerializeField] Text scoreText;
-    public static int score;
+    public int score;
 
     //コンボ関連
     [SerializeField] Text comboText;
     private int combo;
 
-    public static int getscore()
+    //リザルト画面にスコアを渡す
+    public int GetScore()
     {
+        //Debug.Log(score);
         return score;
     }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        scoreText.text = "SCORE " + score;
-    }
-
-        // Update is called once per frame
-     void Update()
-     {
-
-     }
 
     // スコア処理
     public void AddScore(int value, bool pulus)
@@ -37,12 +27,13 @@ public class ScoreManager : MonoBehaviour
         if (pulus == true)
         {
             score += value;
+            Debug.Log(score);
         }
         else if (pulus == false)
         {
 
         }
-        scoreText.text = "SCORE " + score;
+        scoreText.text = "SCORE" + score;
     }
 
     // コンボ処理
@@ -63,5 +54,4 @@ public class ScoreManager : MonoBehaviour
         combo = 0;
         comboText.enabled = false;
     }
-
 }

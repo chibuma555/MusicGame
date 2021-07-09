@@ -8,7 +8,6 @@ public class FadeOut : MonoBehaviour
     private Text text;
     private float time;
     public float fadetime;
-    private bool flag = true;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +20,6 @@ public class FadeOut : MonoBehaviour
     void Update()
     {
         fadetime += 0.01f;
-        text.color = new Color(0, 0, 0, fadetime);
-      
+        text.color = new Color(1,1,1,fadetime); 
     }
 }
