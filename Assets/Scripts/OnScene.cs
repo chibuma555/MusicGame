@@ -9,12 +9,15 @@ public class OnScene : MonoBehaviour
 
     public void OnRetry()
     {
-        SceneManager.LoadScene("SampleScene");
+        //SceneManager.LoadScene("SampleScene");
+        FadeManager.Instance.LoadScene("SampleScene", 0.3f);
     }
 
     public void OnSelect()
     {
-        SceneManager.LoadScene("SelectGames");
+        //SceneManager.LoadScene("SelectGames");
+        FadeManager.Instance.LoadScene("SelectGames", 0.3f);
     }
 
+    
 }

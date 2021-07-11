@@ -21,15 +21,14 @@ public class ScoreManager : MonoBehaviour
     }
 
     // スコア処理
-    public void AddScore(int value, bool pulus)
+    public void AddScore(int value, bool push)
     {
         comboText.enabled = true;
-        if (pulus == true)
+        if (push == true)
         {
             score += value;
-            Debug.Log(score);
         }
-        else if (pulus == false)
+        else if (push == false)
         {
 
         }

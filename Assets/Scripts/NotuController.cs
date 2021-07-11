@@ -43,7 +43,7 @@ public class NotuController : MonoBehaviour
     [SerializeField] Animator textAnime_3;
     [SerializeField] Animator textAnime_4;
 
-
+    bool a = false;
 
 
 
@@ -82,11 +82,11 @@ public class NotuController : MonoBehaviour
     {
         // ノーツと判定エリアの距離
         float offsetZ = judgeArea.transform.position.z - this.transform.position.z;
-        
+
         // 各キーの処理
         if (this.gameObject.transform.position.x == xpos_1)
         {
-            if (Input.GetKey(KeyCode.D))
+            if (Input.GetKeyDown(KeyCode.D))
             {
                 if (offsetZ > ParfectPosition)
                 {
@@ -138,6 +138,7 @@ public class NotuController : MonoBehaviour
             {
                 textAnime_1.SetBool("is_drow", false);
             }
+            
         }
 
         if (this.gameObject.transform.position.x == xpos_2)
@@ -267,7 +268,7 @@ public class NotuController : MonoBehaviour
                 else if (offsetZ > GoodPosition)
                 {
                     judgeText_4.text = "Good";
-                    judgeText_1.color = new Color(1.0f, 0.9f, 0, 1.0f);
+                    judgeText_4.color = new Color(1.0f, 0.9f, 0, 1.0f);
                     textAnime_4.SetBool("is_drow", true);
                     sm.AddScore(100, true);
                     sm.AddCombo(count: 1);
@@ -310,6 +311,7 @@ public class NotuController : MonoBehaviour
                 judgeText_1.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
                 textAnime_1.SetBool("is_drow", true);
                 sm.ComboReset();
+                Destroy(this.gameObject);
             }
 
             if (this.transform.position.x == xpos_2)
@@ -335,11 +337,10 @@ public class NotuController : MonoBehaviour
                 textAnime_4.SetBool("is_drow", true);
                 sm.ComboReset();
             }
-
             Invoke("Destroyer", 0.1f);
-         } 
+         }
+        
     }
-
     void Destroyer()
     {
         Destroy(this.gameObject);

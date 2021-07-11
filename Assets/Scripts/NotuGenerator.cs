@@ -103,20 +103,18 @@ public class NotuGenerator : MonoBehaviour
   
         ListValue[59].transform.position = new Vector3(xpos_1, ypos, 580f);
         ListValue[60].transform.position = new Vector3(xpos_3, ypos, 590f);
-        ListValue[61].transform.position = new Vector3(xpos_2, ypos, 600f);
-        ListValue[62].transform.position = new Vector3(xpos_2, ypos, 610f);
+        ListValue[61].transform.position = new Vector3(xpos_2, ypos, 595f);
+        ListValue[62].transform.position = new Vector3(xpos_2, ypos, 600f);
 
-        ListValue[63].transform.position = new Vector3(xpos_3, ypos, 620f);
-        ListValue[64].transform.position = new Vector3(xpos_1, ypos, 630f);
+        ListValue[63].transform.position = new Vector3(xpos_3, ypos, 610f);
+        ListValue[64].transform.position = new Vector3(xpos_1, ypos, 615f);
+        ListValue[65].transform.position = new Vector3(xpos_1, ypos, 620f);
 
-        ListValue[65].transform.position = new Vector3(xpos_1, ypos, 650f);
-        ListValue[66].transform.position = new Vector3(xpos_4, ypos, 670f);
-        ListValue[67].transform.position = new Vector3(xpos_2, ypos, 680f);
-        ListValue[68].transform.position = new Vector3(xpos_3, ypos, 690f);
-        ListValue[69].transform.position = new Vector3(xpos_4, ypos, 690f);
- 
-        ListValue[70].transform.position = new Vector3(xpos_2, ypos, 700f);
-
+        ListValue[66].transform.position = new Vector3(xpos_3, ypos, 630f);
+        ListValue[67].transform.position = new Vector3(xpos_2, ypos, 630f);
+        ListValue[68].transform.position = new Vector3(xpos_4, ypos, 640f);
+        ListValue[69].transform.position = new Vector3(xpos_3, ypos, 645f);
+        ListValue[70].transform.position = new Vector3(xpos_1, ypos, 650f);
     }
 
 }

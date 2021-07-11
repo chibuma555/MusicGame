@@ -8,13 +8,17 @@ public class BGMcontroller : MonoBehaviour
     AudioSource audiosource;
     float count;
     bool t;
-    
+
+    GameObject BGM;
 
     // Start is called before the first frame update
     void Start()
     {
         audiosource = GetComponent<AudioSource>();
         t = true;
+
+        BGM = GameObject.Find("BackGroundMusic");
+        Destroy(BGM);
     }
 
     // Update is called once per frame
@@ -30,6 +34,8 @@ public class BGMcontroller : MonoBehaviour
             audiosource.Play();
             //Debug.Log("五秒");
         }
+
+       
    
     }
 }
